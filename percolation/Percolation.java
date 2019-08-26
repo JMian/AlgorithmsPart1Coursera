@@ -1,5 +1,5 @@
 /* *****************************************************************************
- *  Name: JMian
+ *  Name: Jia Mian Tan
  *  Date: 26 August 2018
  *  Description: Percolation.java, Assignment 1, Algorithms Part 1 Coursera
  **************************************************************************** */
@@ -17,7 +17,7 @@ public class Percolation {
     private final WeightedQuickUnionUF ufGrid;
     private int openSites;   // to keep track the number of open sites
     // create two arrays to record if each site
-    // is connected to virtual Top and/or is connected to virtual Bottom
+    // is connected to top and/or is connected to bottom
     private boolean[] connectTop;
     private boolean[] connectBottom;
     private boolean percolateFlag;
@@ -33,11 +33,9 @@ public class Percolation {
         connectBottom = new boolean[gridSize];
         for (int i = 0; i < gridSize; i++) {
             gridArray[i] = BLOCKED;   // all sites initially blocked
-            connectTop[i] = false;   // initially not connected to vritual top
-            connectBottom[i] = false;   // initially not connected to virtual bottom
+            connectTop[i] = false;   // initially not connected to top
+            connectBottom[i] = false;   // initially not connected to bottom
         }
-        // ufTop and ufBottom +1 to account for the virtual top and virtual bottom
-        // let both virtual Top and virtual Bottom be at the 0 index position
         ufGrid = new WeightedQuickUnionUF(gridSize);
         openSites = 0;   // initially there is no open site
         percolateFlag = false;   // the system initially does not percolate
@@ -104,7 +102,7 @@ public class Percolation {
                 ufGrid.union(currentSite, currentSite + 1);
             }
             // if the site is at the top/bottom row, the site's root should
-            // connect to the virtual top/bottom
+            // connect to the top/bottom
             if (row == 1)
                 rootTop = true;
             if (row == n)
@@ -128,7 +126,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        // check if the root of site is currently connected to the virtual top
+        // check if the root of site is currently connected to top
         return connectTop[ufGrid.find(toArrayIndex(row, col))];
     }
 
