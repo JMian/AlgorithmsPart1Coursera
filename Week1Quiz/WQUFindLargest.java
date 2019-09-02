@@ -1,6 +1,6 @@
 /* *****************************************************************************
  *  Name: JMian
- *  Date: 27 August 2018
+ *  Date: 27 August 2019
  *  Description: WQUFindLargest.java, Week1 Union-Find Quiz02, Algorithms Part 1 Coursera
 
  Union-find with specific canonical element. Add a method find() to the union-find data
