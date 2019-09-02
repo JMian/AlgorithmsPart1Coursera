@@ -1,6 +1,6 @@
 /* *****************************************************************************
  *  Name: JMian
- *  Date: 27 August 2018
+ *  Date: 27 August 2019
  *  Description: SocialNetwork.java, Week1 Union-Find Quiz01, Algorithms Part 1 Coursera
 
  Social network connectivity. Given a social network containing n members and a
