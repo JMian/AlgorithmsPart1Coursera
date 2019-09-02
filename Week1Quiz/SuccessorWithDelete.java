@@ -1,6 +1,6 @@
 /* *****************************************************************************
  *  Name: JMian
- *  Date: 27 August 2018
+ *  Date: 27 August 2019
  *  Description: SuccessorWithDelete.java, Week1 Union-Find Quiz01, Algorithms Part 1 Coursera
 Given a set of n integers S={0,1,...,n-1} and a sequence of requests of the following form:
 - Remove x from S
