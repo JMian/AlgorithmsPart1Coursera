@@ -1,0 +1,47 @@
+/* *****************************************************************************
+ *  Name: JMian
+ *  Date: 04 September 2019
+ *  Description: EggDrop.txt, Week1 Analysis of Algorithms Quiz03, Algorithms Part 1 Coursera
+
+ Egg drop. Suppose that you have an n-story building (with floors 1 through n) and
+ plenty of eggs. An egg breaks if it is dropped from floor T or higher and does not
+ break otherwise. Your goal is to devise a strategy to determine the value of T given
+ the following limitations on the number of eggs and tosses:
+ - Version 0: 1 egg, ≤T tosses.
+ - Version 1: ∼1lgn eggs and ∼1lgn tosses.
+ - Version 2: ∼lgT eggs and ∼2lgT tosses.
+ - Version 3: 2 eggs and ∼2sqrt(n) tosses.
+ - Version 4: 2 eggs and ≤ c*sqrt(T) tosses for some fixed constant c.
+ **************************************************************************** */
+
+Version 0 (1 egg, ≤T tosses)
+Drop the egg from each floor, starting from floor 1 and subsequently from one floor higher.
+The floor at which the egg first breaks is the value of T.
+
+Version 1 (∼1lgn eggs and ∼1lgn tosses)
+Use binary search method. First drop the egg from n/2 floor (middle of the building):
+if egg breaks, try (n/2)/2 floor (the middle of the building's lower half); if egg doesn't
+break from n/2 floor, try n/2+(n/2)/2 floor (the middle of the building's upper half).
+Follow this method until T is found.
+
+Version 2 (∼lgT eggs and ∼2lgT tosses)
+Drop the egg at 2^k floors starting from floor 1, where k = 0, 1, 2, 3, 4... until
+the egg breaks. At this floor where the egg breaks (use 1 egg), ~lgT + 1(?) tosses have been made.
+Then between floors 2^(k-1) and 2^k use binary search from Version 1 to find the value of T.
+This step takes k-1 (<lgT) eggs and tosses.
+
+Version 3 (2 eggs and ∼2sqrt(n) tosses)
+Step1: Drop the egg at k * sqrt(n) floors, where k = 1, 2, 3, ..., sqrt(n), starting from k = 1
+until the egg breaks. At this point 1 egg has been used and a maximum of sqrt(n) tosses
+has been made. Step2: Drop the egg from floor ((k-1)sqrt(n) + 1). If it doesn't break, drop it
+from next upper floor. Repeat this until the egg breaks. During this process, 1 egg will break
+and a maximum of sqrt(n) tosses will be made.
+
+Version 4 (2 eggs and ≤ c*sqrt(T) tosses for some fixed constant c)
+Drop the egg from 1(1), 3(1+2), 6(1+2+3), 10(1+2+3+4),... floors until the egg breaks at floor
+(1+2+3+4+...+k) = k(k+1)/2 ~ (k^2)/2. At this floor, k tosses have been made.
+T ~ (k^2)/2, k ~ sqrt(2T).
+Drop the egg from each floor starting from floor k(k-1)/2 to k(k+1)/2. The floor at which the
+egg first breaks is the value of T. Between these two floors, the egg has been tossed at
+most k times.
+Maximum total tosses = k + k ~ sqrt(2T) + sqrt(2T) = 2sqrt(2T). c = 2sqrt(2)
