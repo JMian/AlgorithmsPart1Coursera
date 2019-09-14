@@ -1,0 +1,25 @@
+/* *****************************************************************************
+ *  Name: JMian
+ *  Date: 07 September 2019
+ *  Description: JavaGenerics.txt, Week2 Stacks and Queues, Algorithms Part 1 Coursera
+
+ Java generics. Explain why Java prohibits generic array creation.
+ **************************************************************************** */
+
+from https://stackoverflow.com/questions/2927391/whats-the-reason-i-cant-create-generic-array-types-in-java
+@Humoyun Ahmad, @newacct
+https://dzone.com/articles/covariance-and-contravariance
+https://stackoverflow.com/questions/30472449/why-does-java-not-allow-the-creation-of-a-generic-array
+@markspace
+
+In Java, arrays are covariant and a reifiable type, meaning that they retain type
+information at runtime and that theyknow their component type at runtime For example,
+String[] imp.lies the array it points to actually has runtime
+component type String or subtype thereof, not just that it's an array that contains String s.
+Arrays in Java have type information encoded in them. The array itself is an object and a type.
+
+Generics on the other hand, are non-reifiable, because the type information for type
+parameters is discarded by the compiler after the compilation of code is done; therefore
+this type informationo is not available at runtime. This process is called type erasure.
+Important point: Since at runtime there is no type information, there is no way to ensure that
+we are not committing heap pollution.
