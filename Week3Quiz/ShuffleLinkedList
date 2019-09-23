@@ -1,0 +1,153 @@
+/* *****************************************************************************
+ *  Name: JMian
+ *  Date: 14 September 2019
+ *  Description: ShuffleLinkedList.java, Week3 Mergesort, Algorithms Part 1 Coursera
+
+ Shuffling a linked list. Given a singly-linked list containing n items, rearrange the
+ items uniformly at random. Your algorithm should consume a logarithmic (or constant)
+ amount of extra memory and run in time proportional to nlogn in the worst case.
+ **************************************************************************** */
+
+// Hint: design a linear-time subroutine that can take two uniformly shuffled linked lists of
+// sizes n1 and n2 and combined them into a uniformly shuffled linked lists of size n1 + n2.
+
+import edu.princeton.cs.algs4.StdRandom;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class ShuffleLinkedList<Item> implements Iterable<Item> {
+    private Node<Item> first;
+    private Node<Item> last;
+    private int n;
+
+    private class Node<Item> {
+         private Item item;
+         private Node<Item> next;
+    }
+
+    public ShuffleLinkedList() {
+        first = null;
+        last = null;
+        n = 0;
+    }
+
+    public void add(Item item) {
+        Node<Item> node = new Node<>();
+        node.item = item;
+        node.next = null;
+        if (first == null && last == null) {
+            first = node;
+            last = node;
+        }
+        else {
+            last.next = node;
+            last = last.next;
+        }
+        n++;
+    }
+
+    // Nodes left and right are static pointer nodes, pointing only
+    // to the head of the left and right lists' head
+    private Node<Item> merge(Node<Item> leftFirst, Node<Item> rightFirst) {
+        // a helper pointer node pointing only to the head of the shuffling list
+        // the memory required is O(1) * logn
+        Node<Item>helperFirst = new Node<>();
+        Node<Item> left = leftFirst;   // a moving helper node pointing to the left site list's current node
+        Node<Item> right = rightFirst;   // a moving helper node pointing to the right site list's current node
+        Node<Item> current = helperFirst;   // a moving pointer node that actually does the linking job
+        while (left != null && right != null) {
+            int rand = StdRandom.uniform(2);
+            if (rand == 0) {   // takes item from left site
+                current.next = left;
+                current = current.next;
+                left = left.next;
+            }
+            else if (rand == 1) {
+                current.next = right;
+                current = current.next;
+                right = right.next;
+            }
+        }
+        // if right site list is used up but not the left site list,
+        // link to the rest of the left site list; and vice versa
+        if (left != null)
+            current.next = left;
+        else if (right != null)
+            current.next = right;
+
+        return helperFirst.next;   // return the first/head of the newly shuffled list
+    }
+
+    private Node<Item> shuffle(Node<Item> first) {
+        if (first.next == null)
+            return first;
+        Node<Item> getMid = first;
+        Node<Item> getLast = first;
+
+        while (getLast.next != null && getLast.next.next != null) {
+            getMid = getMid.next;
+            getLast = getLast.next.next;
+        }
+        Node<Item> leftFirst = first;
+        Node<Item> rightFirst = getMid.next;
+        getMid.next = null;   // separate the left and right site lists
+
+        leftFirst = shuffle(leftFirst);
+        rightFirst = shuffle(rightFirst);
+        return merge(leftFirst, rightFirst);
+    }
+
+    public void shuffleList() {
+        first = shuffle(first);
+    }
+
+    public Iterator<Item> iterator() {
+        return new ListIterator(first);
+    }
+
+    private class ListIterator implements Iterator<Item> {
+        private Node<Item> current;
+
+        public ListIterator(Node<Item> first) {
+            current = first;
+        }
+
+        public boolean hasNext() {
+            return current != null;
+        }
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+        public Item next() {
+            if (!hasNext())
+                throw new NoSuchElementException("No more item in list");
+            Item item = current.item;
+            current = current.next;
+            return item;
+        }
+    }
+
+    public static void main(String[] args) {
+        ShuffleLinkedList<Integer> list = new ShuffleLinkedList<Integer>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
+        list.add(9);
+        System.out.println("Initial list: ");
+        for (Integer i : list) System.out.print(i + ", ");
+        list.shuffleList();
+        System.out.println(" ");
+        System.out.println("Shuffled list: ");
+        Iterator<Integer> iter = list.iterator();
+        while (iter.hasNext()) {
+            System.out.print(iter.next() + ", ");
+        }
+        System.out.println(" ");
+    }
+}
