@@ -1,0 +1,16 @@
+/* *****************************************************************************
+ *  Name: JMian
+ *  Date: 06 October 2019
+ *  Description: RBBSTNoExtraMemory.txt, Week5 Balanced Search Trees, Algorithms Part 1 Coursera
+
+ Red–black BST with no extra memory. Describe how to save the memory for storing the
+ color information when implementing a red–black BST.
+ **************************************************************************** */
+
+ Ans from https://stackoverflow.com/questions/16088364/how-to-save-the-memory-when-storing-color-information-in-red-black-trees
+ @icystar
+ http://underpop.online.fr/j/java/help/red-black-trees-algorithms.html.gz#ch13lev2sec4   13.65
+
+ Ans: if a node's link from its parent is red, exchange this link with the parent's right link. So to check
+ whether it's a red color link of this node from the parent, check whether parent.left > parent or
+ parent > parent.right. Because under normal condition for a BST, should be parent.left < parent < parent.right
