@@ -1,0 +1,48 @@
+/* *****************************************************************************
+ *  Name: JMian
+ *  Date: 23 October 2019
+ *  Description: HashingWrong.txt, Week6 Hash Tables, Algorithms Part 1 Coursera
+
+ Hashing with wrong hashCode() or equals(). Suppose that you implement a data type
+ OlympicAthlete for use in a java.util.HashMap.
+ - Describe what happens if you override hashCode() but not equals().
+ - Describe what happens if you override equals() but not hashCode().
+ - Describe what happens if you override hashCode() but implement
+   public boolean equals(OlympicAthlete that) instead of
+   public boolean equals(Object that).
+
+ **************************************************************************** */
+
+ * The .equals() method in Java's Object Class only returns true if and only if the
+ two objects being compared refer to the same object (i.e. x == y, same memory address)
+ In Java, == is used to test memory address; .equals() is used to test content
+
+https://stackoverflow.com/questions/2265503/why-do-i-need-to-override-the-equals-and-hashcode-methods-in-java/27372458#27372458?newreg=3c36af09671b43df97f9504ab9f752b5
+   @user104309 answered Dec 9'14
+
+https://stackoverflow.com/questions/6636920/java-why-should-equals-method-input-parameter-be-object
+   @Peter Drake answered Dec 9'18
+
+https://stackoverflow.com/questions/12787947/overriding-object-equals-vs-overloading-it
+   @Brian Oct 8'12
+
+Q. Describe what happens if you override hashCode() but not equals().
+A. Objects referring to the same athlete will have the same hashcode therefore be hashed into the
+   same bucket. However they will be treated as different objects (athletes) since their memory addresses
+   are not the same (according to Java's default .equals() method). Therefore although they are actually
+   referring to the same athlete, they are not equal and therefore could not find a match in that bucket.
+
+Q. Describe what happens if you override equals() but not hashCode().
+A. Objects referring to the same athlete will have different hashcodes since Java's default hashCode() method
+   gives different objects different hashcodes. Therefore objects actually referring to the same athlete
+   will be put into different buckets.
+
+Q. Describe what happens if you override hashCode() but implement public boolean equals(OlympicAthlete that)
+   instead of public boolean equals(Object that).
+A. In HashMap although the different objects referring to the same athlete will have the same hash code and therefore
+   be put into the same bucket, they are not equal. This is because equals(OlympicAthlete that) does not override
+   the default Java's Object equals(), but rather it is overloading it (defining a new method with the same name but
+   different parameters). In HashMap implementation, the parameter Object is used instead of OlympicAthlete, and
+   therefore in this case the situation is similar to when hashCode() is overriden but not equals().
+   Override: redefine a method, remove its original implementation and replace it with your own
+   Overload: define an entirely new method
